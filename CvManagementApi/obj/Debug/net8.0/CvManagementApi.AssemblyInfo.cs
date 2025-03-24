@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CvManagementApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e6f08ec3f4d1b408915d66c4fad16afb549e98d5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cc70002068c66cce675ec54f1f474ef44ea91b54")]
 [assembly: System.Reflection.AssemblyProductAttribute("CvManagementApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CvManagementApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

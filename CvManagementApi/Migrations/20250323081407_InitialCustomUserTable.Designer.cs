@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CvManagementApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250323081407_InitialCustomUserTable")]
+    partial class InitialCustomUserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,35 +23,6 @@ namespace CvManagementApi.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
-
-            modelBuilder.Entity("Award", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CVId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Organization")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CVId");
-
-                    b.ToTable("Awards");
-                });
 
             modelBuilder.Entity("CV", b =>
                 {
@@ -81,64 +55,6 @@ namespace CvManagementApi.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("CVs");
-                });
-
-            modelBuilder.Entity("Certification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CVId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("IssuedBy")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CVId");
-
-                    b.ToTable("Certifications");
-                });
-
-            modelBuilder.Entity("Course", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CVId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Provider")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CVId");
-
-                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("Education", b =>
@@ -191,32 +107,6 @@ namespace CvManagementApi.Migrations
                     b.HasIndex("CVId");
 
                     b.ToTable("Experiences");
-                });
-
-            modelBuilder.Entity("Language", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CVId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Proficiency")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CVId");
-
-                    b.ToTable("Languages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -351,97 +241,6 @@ namespace CvManagementApi.Migrations
                     b.ToTable("UserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Position", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CVId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Organization")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CVId");
-
-                    b.ToTable("Positions");
-                });
-
-            modelBuilder.Entity("Presentation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CVId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Event")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CVId");
-
-                    b.ToTable("Presentations");
-                });
-
-            modelBuilder.Entity("ProjectExperience", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CVId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ProjectName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CVId");
-
-                    b.ToTable("ProjectExperiences");
-                });
-
             modelBuilder.Entity("Reference", b =>
                 {
                     b.Property<int>("Id")
@@ -466,32 +265,6 @@ namespace CvManagementApi.Migrations
                     b.HasIndex("CVId");
 
                     b.ToTable("References");
-                });
-
-            modelBuilder.Entity("RoleOverview", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CVId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CVId");
-
-                    b.ToTable("RoleOverviews");
                 });
 
             modelBuilder.Entity("Skill", b =>
@@ -591,17 +364,6 @@ namespace CvManagementApi.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("Award", b =>
-                {
-                    b.HasOne("CV", "CV")
-                        .WithMany("Awards")
-                        .HasForeignKey("CVId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CV");
-                });
-
             modelBuilder.Entity("CV", b =>
                 {
                     b.HasOne("User", "User")
@@ -610,28 +372,6 @@ namespace CvManagementApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Certification", b =>
-                {
-                    b.HasOne("CV", "CV")
-                        .WithMany("Certifications")
-                        .HasForeignKey("CVId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CV");
-                });
-
-            modelBuilder.Entity("Course", b =>
-                {
-                    b.HasOne("CV", "CV")
-                        .WithMany("Courses")
-                        .HasForeignKey("CVId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CV");
                 });
 
             modelBuilder.Entity("Education", b =>
@@ -649,17 +389,6 @@ namespace CvManagementApi.Migrations
                 {
                     b.HasOne("CV", "CV")
                         .WithMany("Experiences")
-                        .HasForeignKey("CVId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CV");
-                });
-
-            modelBuilder.Entity("Language", b =>
-                {
-                    b.HasOne("CV", "CV")
-                        .WithMany("Languages")
                         .HasForeignKey("CVId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -718,54 +447,10 @@ namespace CvManagementApi.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Position", b =>
-                {
-                    b.HasOne("CV", "CV")
-                        .WithMany("Positions")
-                        .HasForeignKey("CVId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CV");
-                });
-
-            modelBuilder.Entity("Presentation", b =>
-                {
-                    b.HasOne("CV", "CV")
-                        .WithMany("Presentations")
-                        .HasForeignKey("CVId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CV");
-                });
-
-            modelBuilder.Entity("ProjectExperience", b =>
-                {
-                    b.HasOne("CV", "CV")
-                        .WithMany("ProjectExperiences")
-                        .HasForeignKey("CVId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CV");
-                });
-
             modelBuilder.Entity("Reference", b =>
                 {
                     b.HasOne("CV", "CV")
                         .WithMany("References")
-                        .HasForeignKey("CVId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CV");
-                });
-
-            modelBuilder.Entity("RoleOverview", b =>
-                {
-                    b.HasOne("CV", "CV")
-                        .WithMany("RoleOverviews")
                         .HasForeignKey("CVId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -786,27 +471,11 @@ namespace CvManagementApi.Migrations
 
             modelBuilder.Entity("CV", b =>
                 {
-                    b.Navigation("Awards");
-
-                    b.Navigation("Certifications");
-
-                    b.Navigation("Courses");
-
                     b.Navigation("Educations");
 
                     b.Navigation("Experiences");
 
-                    b.Navigation("Languages");
-
-                    b.Navigation("Positions");
-
-                    b.Navigation("Presentations");
-
-                    b.Navigation("ProjectExperiences");
-
                     b.Navigation("References");
-
-                    b.Navigation("RoleOverviews");
 
                     b.Navigation("Skills");
                 });

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics; // Legg til denne!
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 public class AppDbContext : IdentityDbContext<User>
 {
@@ -12,16 +13,35 @@ public class AppDbContext : IdentityDbContext<User>
     public DbSet<Education> Educations { get; set; }
     public DbSet<Experience> Experiences { get; set; }
     public DbSet<Reference> References { get; set; }
+    public DbSet<Award> Awards { get; set; }
+    public DbSet<Certification> Certifications { get; set; }
+    public DbSet<Course> Courses { get; set; }
+    public DbSet<Language> Languages { get; set; }
+    public DbSet<Position> Positions { get; set; }
+    public DbSet<Presentation> Presentations { get; set; }
+    public DbSet<ProjectExperience> ProjectExperiences { get; set; }
+    public DbSet<RoleOverview> RoleOverviews { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        // Ignorer feil, ved småjusteringer. krever ikke migrasjon med engang og praktisk under utvikling. 
         optionsBuilder.ConfigureWarnings(warnings =>
-            warnings.Ignore(RelationalEventId.PendingModelChangesWarning)); // 🔹 Ignorer feilen
+            warnings.Ignore(RelationalEventId.PendingModelChangesWarning)); 
+
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        // Endre Identity-tabellnavn
+        builder.Entity<User>().ToTable("Users");
+        builder.Entity<IdentityRole>().ToTable("Roles");
+        builder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
+        builder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims");
+        builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
+        builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
+        builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
 
         builder.Entity<CV>()
             .HasOne(c => c.User)
@@ -53,44 +73,53 @@ public class AppDbContext : IdentityDbContext<User>
             .HasForeignKey(r => r.CVId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // 🔹 TESTDATA (HARDCODED, INGEN GUID ELLER DATOER)
-        var testUser = new User
-        {
-            Id = "test-user-1",
-            UserName = "testuser",
-            Email = "testuser@example.com",
-            Role = UserRole.User
-        };
+        builder.Entity<Award>()
+            .HasOne(a => a.CV)
+            .WithMany(c => c.Awards)
+            .HasForeignKey(a => a.CVId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-        var adminUser = new User
-        {
-            Id = "admin-user-1",
-            UserName = "admin",
-            Email = "admin@example.com",
-            Role = UserRole.Admin
-        };
+        builder.Entity<Certification>()
+            .HasOne(c=> c.CV)
+            .WithMany(c => c.Certifications)
+            .HasForeignKey(c => c.CVId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-        var testCV = new CV
-        {
-            Id = -1,  // 🔹 Endret fra 1 til -1 for å unngå kollisjon
-            UserId = testUser.Id,
-            FirstName = "Test",
-            LastName = "Bruker",
-            Email = "testuser@example.com",
-            Phone = 12345678
-        };
+        builder.Entity<Course>()
+            .HasOne(c=> c.CV)
+            .WithMany(c => c.Courses)
+            .HasForeignKey(c => c.CVId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-        var adminCV = new CV
-        {
-            Id = -2,  // 🔹 Endret fra 2 til -2 for å unngå kollisjon
-            UserId = adminUser.Id, 
-            FirstName = "Admin",
-            LastName = "User",
-            Email = "admin@example.com",
-            Phone = 98765432
-        };
+        builder.Entity<Language>()
+            .HasOne(l=> l.CV)
+            .WithMany(c => c.Languages)
+            .HasForeignKey(l => l.CVId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-        builder.Entity<User>().HasData(testUser, adminUser);
-        builder.Entity<CV>().HasData(testCV, adminCV);
+        builder.Entity<Position>()
+            .HasOne(p=> p.CV)
+            .WithMany(c => c.Positions)
+            .HasForeignKey(p => p.CVId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<Presentation>()
+            .HasOne(p=> p.CV)
+            .WithMany(c => c.Presentations)
+            .HasForeignKey(p => p.CVId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<ProjectExperience>()
+            .HasOne(p=> p.CV)
+            .WithMany(c => c.ProjectExperiences)
+            .HasForeignKey(p => p.CVId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<RoleOverview>()
+            .HasOne(r=> r.CV)
+            .WithMany(c => c.RoleOverviews)
+            .HasForeignKey(r => r.CVId)
+            .OnDelete(DeleteBehavior.Cascade);
+
     }
 }
