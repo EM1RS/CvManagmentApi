@@ -20,6 +20,7 @@ namespace CvManagementApi.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+<<<<<<< HEAD
 
             modelBuilder.Entity("Award", b =>
                 {
@@ -49,6 +50,8 @@ namespace CvManagementApi.Migrations
 
                     b.ToTable("Awards");
                 });
+=======
+>>>>>>> f98f850e8f8cccd87485d5e5af59c2aa6d050b1d
 
             modelBuilder.Entity("CV", b =>
                 {
@@ -81,6 +84,7 @@ namespace CvManagementApi.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("CVs");
+<<<<<<< HEAD
                 });
 
             modelBuilder.Entity("Certification", b =>
@@ -139,6 +143,8 @@ namespace CvManagementApi.Migrations
                     b.HasIndex("CVId");
 
                     b.ToTable("Courses");
+=======
+>>>>>>> f98f850e8f8cccd87485d5e5af59c2aa6d050b1d
                 });
 
             modelBuilder.Entity("Education", b =>
@@ -349,6 +355,7 @@ namespace CvManagementApi.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("UserTokens", (string)null);
+<<<<<<< HEAD
                 });
 
             modelBuilder.Entity("Position", b =>
@@ -440,6 +447,8 @@ namespace CvManagementApi.Migrations
                     b.HasIndex("CVId");
 
                     b.ToTable("ProjectExperiences");
+=======
+>>>>>>> f98f850e8f8cccd87485d5e5af59c2aa6d050b1d
                 });
 
             modelBuilder.Entity("Reference", b =>
@@ -589,6 +598,7 @@ namespace CvManagementApi.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("Users", (string)null);
+<<<<<<< HEAD
                 });
 
             modelBuilder.Entity("Award", b =>
@@ -600,6 +610,8 @@ namespace CvManagementApi.Migrations
                         .IsRequired();
 
                     b.Navigation("CV");
+=======
+>>>>>>> f98f850e8f8cccd87485d5e5af59c2aa6d050b1d
                 });
 
             modelBuilder.Entity("CV", b =>

@@ -72,6 +72,7 @@ public class AppDbContext : IdentityDbContext<User>
             .WithMany(c => c.References)
             .HasForeignKey(r => r.CVId)
             .OnDelete(DeleteBehavior.Cascade);
+<<<<<<< HEAD
 
         builder.Entity<Award>()
             .HasOne(a => a.CV)
@@ -121,5 +122,7 @@ public class AppDbContext : IdentityDbContext<User>
             .HasForeignKey(r => r.CVId)
             .OnDelete(DeleteBehavior.Cascade);
 
+=======
+>>>>>>> f98f850e8f8cccd87485d5e5af59c2aa6d050b1d
     }
 }
